@@ -22,38 +22,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.gson.gson
 
-/**
- * ViewModel pour l'exemple
-
-class ExampleViewModel : ViewModel() {
-fun fetchPosts() {
-// On utilise l'objet viewModelScope pour lancer une coroutine et faire notre appel réseau
-viewModelScope.launch {
-val result: Result<List<Post>> = RemoteDataSource.client.get(
-"https://jsonplaceholder.typicode.com/posts",
-queryParams = mapOf("userId" to "1"),
-headers = mapOf("Authorization" to "Bearer token")
-)
-val postResult: Result<Post> = RemoteDataSource.client.post(
-"https://jsonplaceholder.typicode.com/posts",
-Post(1, 1, "title", "body")
-)
-
-// Vérifier si la requête a réussi
-when {
-result.isSuccess -> {
-val posts = result.getOrThrow()
-}
-result.isFailure -> {
-val exception = result.exceptionOrNull()
-Log.e("ExampleViewModel", "Erreur: ${exception?.message}")
-}
-}
-
-}
-
-}
-}*/
 
 class RemoteDataSource {
     companion object {
