@@ -13,6 +13,13 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            //withJavadocJar()
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -46,7 +53,11 @@ publishing {
         create<MavenPublication>("release") {
             groupId = "com.github.Fredbellano"
             artifactId = "android-network-library"
-            version = "1.0.0"
+            version = "1.0.2"
+
+            afterEvaluate {
+                from(components["release"])
+            }
         }
     }
     repositories {
