@@ -7,11 +7,12 @@ Ajouter la librairie à votre projet en ajoutant la ligne suivante dans votre fi
 
 ```kotlin
 dependencies {
-    implementation("com.github.Fredbellano:network-android-library:1.0.0")
+    implementation("com.github.Fredbellano:network-android-library:1.0.2")
 }
 ```
 
 ## Utilisation
+
 Pour pouvoir faire des requêtes HTTP, il faut utiliser le client dans le fichier `RemoteDataSource.kt`:
 
 ```kotlin
@@ -68,7 +69,6 @@ Pour faire une requête DELETE, il faut utiliser la méthode `delete` du client:
 ```kotlin
 val result: Result<MyDataClass> = RemoteDataSource.client.delete("{URL}")
 ```
-
 
 ### Exemple d'utilisation dans un ViewModel
 
