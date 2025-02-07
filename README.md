@@ -7,7 +7,7 @@ Ajouter la librairie à votre projet en ajoutant la ligne suivante dans votre fi
 
 ```kotlin
 dependencies {
-    implementation("com.github.Fredbellano:network-android-library:1.0.2")
+    implementation("com.github.Fredbellano:android-network-library:1.0.2")
 }
 ```
 
@@ -41,7 +41,7 @@ val result: Result<MyDataClass> = RemoteDataSource.client.get("{URL}")
 // Avec des paramètres et headers
 val result: Result<MyDataClass> =
     RemoteDataSource.client.get("{URL}",
-        params = mapOf("param1" to "value1", "param2" to "value2"), 
+        params = mapOf("param1" to "value1", "param2" to "value2"),
         headers = mapOf("header1" to "value1", "header2" to "value2")
     )
 ```
@@ -82,7 +82,7 @@ class ExampleViewModel : ViewModel() {
                 queryParams = mapOf("userId" to "1"),
                 headers = mapOf("Authorization" to "Bearer token")
             )
-            
+
             // Vérifier si la requête a réussi
             when {
                 result.isSuccess -> {
