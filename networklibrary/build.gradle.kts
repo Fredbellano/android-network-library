@@ -1,6 +1,8 @@
+import com.android.build.api.dsl.CompileSdkVersion
+
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.maven.publish)
 }
 
@@ -31,29 +33,28 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(11)
 }
 
 dependencies {
-    implementation(libs.gson)
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.serialization)
-    implementation(libs.ktor.client.android)
-    implementation(libs.ktor.serialization.gson)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.client.logging.jvm)
+    api(libs.ktor.client.core)
+    api(libs.ktor.client.serialization)
+    api(libs.ktor.client.android)
+    api(libs.ktor.serialization.kotlinx.json)
+    api(libs.ktor.client.content.negotiation)
+    api(libs.ktor.client.logging.jvm)
 }
 
 publishing {
@@ -61,7 +62,7 @@ publishing {
         create<MavenPublication>("release") {
             groupId = "com.github.Fredbellano"
             artifactId = "android-network-library"
-            version = "1.0.3"
+            version = "1.0.4"
 
             afterEvaluate {
                 from(components["release"])

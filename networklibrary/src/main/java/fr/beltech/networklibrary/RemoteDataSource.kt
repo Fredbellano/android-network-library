@@ -20,7 +20,8 @@ import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
-import io.ktor.serialization.gson.gson
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
 
 class RemoteDataSource {
@@ -29,10 +30,13 @@ class RemoteDataSource {
 
         val client = HttpClient(Android) {
             install(ContentNegotiation) {
-                gson {
-                    setPrettyPrinting()
-                    serializeNulls()
-                }
+                json(
+                    Json {
+                        prettyPrint = true
+                        explicitNulls = true
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
 
             install(Logging) {
