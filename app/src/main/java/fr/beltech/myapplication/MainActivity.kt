@@ -1,6 +1,7 @@
 package fr.beltech.myapplication
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +16,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import fr.beltech.myapplication.ui.theme.MyApplicationTheme
 import fr.beltech.networklibrary.RemoteDataSource
 import fr.beltech.networklibrary.get
+import kotlinx.serialization.Serializable
+
+
+@Serializable
+data class Post(val title: String)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +42,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     LaunchedEffect(Unit) {
-        RemoteDataSource.client.get<Any>("https://jsonplaceholder.typicode.com/todos/1")
+        val result =    RemoteDataSource.client.get<Post>("https://jsonplaceholder.typicode.com/todos/1")
+        Log.d("FBO", "result ${result.getOrThrow().title}")
     }
+
     Text(
         text = "Hello $name!",
         modifier = modifier
