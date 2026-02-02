@@ -2,12 +2,23 @@
 
 ## Installation
 
-Ajouter la librairie à votre projet en ajoutant la ligne suivante dans votre fichier
-`build.gradle.kts`:
+Ajouter le repository Maven (JitPack) dans votre `settings.gradle.kts`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+}
+```
+
+Puis ajouter la librairie dans votre `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.Fredbellano:android-network-library:1.0.2")
+    implementation("com.github.Fredbellano:android-network-library:<latest-version>")
 }
 ```
 
@@ -16,10 +27,10 @@ dependencies {
 Pour pouvoir faire des requêtes HTTP, il faut utiliser le client dans le fichier `RemoteDataSource.kt`:
 
 ```kotlin
-RemoteDatSource.client
+RemoteDataSource.client
 ```
 
-### Objet Result
+#### Objet Result
 
 Le client retourne un objet de type `Result<T>` pour chaques types de requetes.
 Ce type permet de savoir si la requête a été un succès ou un échec.
@@ -31,7 +42,7 @@ val value: T = result.getOrNull() // or getOrThrow() pour obtenir la valeur ou l
 val exception: Throwable? = result.exceptionOrNull()
 ```
 
-### Methode GET
+#### Methode GET
 
 Pour faire une requête GET, il faut utiliser la méthode `get` du client:
 
@@ -46,7 +57,7 @@ val result: Result<MyDataClass> =
     )
 ```
 
-### Methode POST
+#### Methode POST
 
 Pour faire une requête POST, il faut utiliser la méthode `post` du client:
 
@@ -54,7 +65,7 @@ Pour faire une requête POST, il faut utiliser la méthode `post` du client:
 val result: Result<MyDataClass> = RemoteDataSource.client.post("{URL}", body = MyDataClass())
 ```
 
-### Methode PUT
+#### Methode PUT
 
 Pour faire une requête PUT, il faut utiliser la méthode `put` du client:
 
@@ -62,7 +73,7 @@ Pour faire une requête PUT, il faut utiliser la méthode `put` du client:
 val result: Result<MyDataClass> = RemoteDataSource.client.put("{URL}", body = MyDataClass())
 ```
 
-### Methode DELETE
+#### Methode DELETE
 
 Pour faire une requête DELETE, il faut utiliser la méthode `delete` du client:
 
@@ -70,12 +81,12 @@ Pour faire une requête DELETE, il faut utiliser la méthode `delete` du client:
 val result: Result<MyDataClass> = RemoteDataSource.client.delete("{URL}")
 ```
 
-### Exemple d'utilisation dans un ViewModel
+#### Exemple d'utilisation dans un ViewModel
 
 ```kotlin
 class ExampleViewModel : ViewModel() {
     fun fetchPosts() {
-        // On utilise l'objet viewModelScope pour lancer une coroutine et faire notre appel réseau
+        // ViewModelScope est une CoroutineScope liée au ViewModel (i.e : annulée lorsque le ViewModel est détruit)
         viewModelScope.launch {
             val result: Result<List<Post>> = RemoteDataSource.client.get(
                 "https://jsonplaceholder.typicode.com/posts",
